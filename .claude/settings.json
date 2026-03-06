@@ -1,0 +1,26 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(grep:*)",
+      "Bash(go build:*)",
+      "Bash(go mod:*)",
+      "Bash(go vet:*)",
+      "Bash(go test:*)",
+      "Bash(cargo check:*)",
+      "Bash(cargo build:*)",
+      "Bash(cargo test:*)",
+      "Bash(npm install:*)",
+      "Bash(npm test:*)",
+      "Bash(pip install:*)",
+      "Bash(pytest:*)",
+      "Bash(ls:*)",
+      "Bash(find:*)",
+      "Bash(mkdir:*)",
+      "Bash(rm:*)",
+      "Bash(cat:*)",
+      "Bash(git log:*)",
+      "Bash(git status:*)",
+      "Bash(git diff:*)"
+    ]
+  }
+}
