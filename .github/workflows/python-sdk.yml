@@ -29,17 +29,21 @@ jobs:
           cache: pip
           cache-dependency-path: python/requirements.txt
 
+      - name: Install Python dependencies
+        working-directory: python
+        run: pip install -r requirements.txt
+
       - name: Build testchain
         working-directory: testchain
         run: go mod tidy && go build -o testchain .
 
-      - name: Start testchain (auto-stop after 30s)
+      - name: Start testchain (auto-stop after 60s)
         working-directory: testchain
-        run: ./testchain -timeout 30s &
+        run: ./testchain -timeout 60s &
 
-      - name: Wait for chain HTTP to be ready
+      - name: Wait for chain to be ready
         run: |
-          for i in $(seq 1 15); do
+          for i in $(seq 1 20); do
             if curl -sf -X POST http://localhost:7999/api/reading \
                -H "Content-Type: application/json" \
                -d '{"tripod_name":"asset","func_name":"QueryBalance","params":"{}"}' \
@@ -47,13 +51,9 @@ jobs:
               echo "Chain ready"
               break
             fi
-            echo "Waiting for chain... ($i/15)"
+            echo "Waiting for chain... ($i/20)"
             sleep 1
           done
-
-      - name: Install Python dependencies
-        working-directory: python
-        run: pip install -r requirements.txt
 
       - name: Run Python SDK tests
         working-directory: python

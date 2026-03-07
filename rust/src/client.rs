@@ -133,7 +133,19 @@ impl YuClient {
         Box<dyn std::error::Error>,
     > {
         let url = format!("{}/subscribe/results", self.ws_url);
-        let (ws_stream, _) = connect_async(url.as_str()).await?;
+        let ws_stream = {
+            let mut retries = 10u32;
+            loop {
+                match connect_async(url.as_str()).await {
+                    Ok((stream, _)) => break stream,
+                    Err(e) if retries > 0 => {
+                        retries -= 1;
+                        tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
+                    }
+                    Err(e) => return Err(e.into()),
+                }
+            }
+        };
         let (tx, rx) = mpsc::channel(64);
 
         let handle = tokio::spawn(async move {

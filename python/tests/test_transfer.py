@@ -43,21 +43,21 @@ def test_create_and_transfer(client):
 
     # CreateAccount
     c.write_chain("asset", "CreateAccount", {"amount": CREATE_AMOUNT})
-    time.sleep(5)
+    time.sleep(8)
 
     balance = _query_balance(c, kp.address)
     assert balance == CREATE_AMOUNT, f"expected {CREATE_AMOUNT}, got {balance}"
 
     # Transfer 1
     c.write_chain("asset", "Transfer", {"to": to_kp.address, "amount": TRANSFER_1})
-    time.sleep(4)
+    time.sleep(6)
 
     assert _query_balance(c, kp.address) == CREATE_AMOUNT - TRANSFER_1
     assert _query_balance(c, to_kp.address) == TRANSFER_1
 
     # Transfer 2
     c.write_chain("asset", "Transfer", {"to": to_kp.address, "amount": TRANSFER_2})
-    time.sleep(4)
+    time.sleep(6)
 
     assert _query_balance(c, kp.address) == CREATE_AMOUNT - TRANSFER_1 - TRANSFER_2
     assert _query_balance(c, to_kp.address) == TRANSFER_1 + TRANSFER_2
