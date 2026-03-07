@@ -60,14 +60,16 @@ class YuClient:
             "signature": _to_hex(sig),
             "call": wr_call.to_dict(),
         }
-        resp = requests.post(f"{self.http_url}/api/writing", json=post_body)
+        resp = requests.post(f"{self.http_url}/api/writing", json=post_body,
+                             proxies={"http": None, "https": None})
         resp.raise_for_status()
 
     def read_chain(self, tripod_name: str, func_name: str, params: Any) -> Any:
         """Send a reading query to the chain. Returns the parsed JSON response body."""
         params_str = json.dumps(params, separators=(",", ":"))
         rd_call = RdCall(tripod_name=tripod_name, func_name=func_name, params=params_str)
-        resp = requests.post(f"{self.http_url}/api/reading", json=rd_call.to_dict())
+        resp = requests.post(f"{self.http_url}/api/reading", json=rd_call.to_dict(),
+                             proxies={"http": None, "https": None})
         resp.raise_for_status()
         return resp.json()
 
@@ -84,7 +86,7 @@ class YuClient:
 
     def stop_chain(self) -> None:
         """Send admin stop request."""
-        requests.get(f"{self.http_url}/api/admin/stop")
+        requests.get(f"{self.http_url}/api/admin/stop", proxies={"http": None, "https": None})
 
 
 class EventSubscriber:

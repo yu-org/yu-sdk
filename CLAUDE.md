@@ -6,7 +6,7 @@
 - rust  - rust语言的sdk包
 - js   - js语言的sdk包
 - python  - python语言的sdk包
-- .gitignore 把各个语言该忽略的文件夹和二进制文件都忽略掉
+- .gitignore 把各个语言该忽略的文件夹、二进制文件 和测试生成的文件、文件夹 都忽略掉
 
 # 描述
 这个项目是为了给 github.com/yu-org/yu 这个项目开发多语言的SDK所用，需要各类语言

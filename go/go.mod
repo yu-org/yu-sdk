@@ -8,7 +8,7 @@ require (
 	github.com/HyperService-Consortium/go-hexutil v1.0.1
 	github.com/gorilla/websocket v1.5.3
 	github.com/stretchr/testify v1.10.0
-	github.com/yu-org/yu v0.0.0
+	github.com/yu-org/yu v1.3.0
 )
 
 require (
@@ -190,5 +190,3 @@ require (
 	modernc.org/memory v1.8.0 // indirect
 	modernc.org/sqlite v1.34.5 // indirect
 )
-
-replace github.com/yu-org/yu => ../../yu

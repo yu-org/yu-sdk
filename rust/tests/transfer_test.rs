@@ -11,7 +11,6 @@
 use std::collections::HashMap;
 use std::time::Duration;
 
-use serde_json::Value;
 use yu_sdk::{KeyPair, YuClient};
 
 async fn query_balance(client: &YuClient, address: &str) -> u64 {
@@ -71,7 +70,7 @@ async fn test_transfer_asset() {
         )
         .await
         .expect("write_chain Transfer 1 failed");
-    tokio::time::sleep(Duration::from_secs(4)).await;
+    tokio::time::sleep(Duration::from_secs(6)).await;
     assert_eq!(
         query_balance(&client, &my_addr).await,
         CREATE_AMOUNT - TRANSFER_1
@@ -89,7 +88,7 @@ async fn test_transfer_asset() {
         )
         .await
         .expect("write_chain Transfer 2 failed");
-    tokio::time::sleep(Duration::from_secs(4)).await;
+    tokio::time::sleep(Duration::from_secs(6)).await;
     assert_eq!(
         query_balance(&client, &my_addr).await,
         CREATE_AMOUNT - TRANSFER_1 - TRANSFER_2

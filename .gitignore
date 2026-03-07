@@ -7,8 +7,9 @@
 go/vendor/
 go/bin/
 **/go.sum
-**/testchain/data/
-**/testchain/testchain
+testchain/testchain
+testchain/yu/
+go/tests/yu/
 
 # Python
 python/__pycache__/
@@ -22,6 +23,7 @@ python/venv/
 
 # JavaScript
 js/node_modules/
+js/package-lock.json
 js/dist/
 js/coverage/
 
