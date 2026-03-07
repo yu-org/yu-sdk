@@ -1,7 +1,9 @@
 package main
 
 import (
+	"flag"
 	"os"
+	"time"
 
 	"github.com/yu-org/yu/apps/asset"
 	"github.com/yu-org/yu/apps/poa"
@@ -9,16 +11,28 @@ import (
 )
 
 func main() {
+	timeout := flag.Duration("timeout", 0, "auto-stop the chain after this duration (e.g. 30s). 0 means run forever.")
+	flag.Parse()
+
 	poaCfg := poa.DefaultCfg(0)
 	yuCfg := startup.InitDefaultKernelConfig()
 	yuCfg.IsAdmin = true
 
-	// Reset history data for a clean test run
 	os.RemoveAll(yuCfg.DataDir)
 
-	startup.InitDefaultKernel(yuCfg).
+	chain := startup.InitDefaultKernel(yuCfg).
 		WithTripods(
 			poa.NewPoa(poaCfg),
 			asset.NewAsset("YuCoin"),
-		).Startup()
+		)
+
+	chain.Startup()
+
+	if *timeout > 0 {
+		time.Sleep(*timeout)
+		chain.Stop()
+	} else {
+		// Block forever until OS signal
+		select {}
+	}
 }

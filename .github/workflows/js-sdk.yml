@@ -1,0 +1,60 @@
+name: JavaScript SDK
+
+on:
+  push:
+    paths:
+      - 'js/**'
+      - 'testchain/**'
+      - '!**/*.md'
+  pull_request:
+    paths:
+      - 'js/**'
+      - 'testchain/**'
+      - '!**/*.md'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.21'
+          cache-dependency-path: testchain/go.sum
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: npm
+          cache-dependency-path: js/package.json
+
+      - name: Build testchain
+        working-directory: testchain
+        run: go mod tidy && go build -o testchain .
+
+      - name: Start testchain (auto-stop after 30s)
+        working-directory: testchain
+        run: ./testchain -timeout 30s &
+
+      - name: Wait for chain HTTP to be ready
+        run: |
+          for i in $(seq 1 15); do
+            if curl -sf -X POST http://localhost:7999/api/reading \
+               -H "Content-Type: application/json" \
+               -d '{"tripod_name":"asset","func_name":"QueryBalance","params":"{}"}' \
+               > /dev/null 2>&1; then
+              echo "Chain ready"
+              break
+            fi
+            echo "Waiting for chain... ($i/15)"
+            sleep 1
+          done
+
+      - name: Install JS dependencies
+        working-directory: js
+        run: npm install
+
+      - name: Run JavaScript SDK tests
+        working-directory: js
+        run: npm test

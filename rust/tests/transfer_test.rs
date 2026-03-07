@@ -57,7 +57,7 @@ async fn test_transfer_asset() {
         )
         .await
         .expect("write_chain CreateAccount failed");
-    tokio::time::sleep(Duration::from_secs(10)).await;
+    tokio::time::sleep(Duration::from_secs(5)).await;
     assert_eq!(query_balance(&client, &my_addr).await, CREATE_AMOUNT);
 
     // Transfer 1
@@ -71,7 +71,7 @@ async fn test_transfer_asset() {
         )
         .await
         .expect("write_chain Transfer 1 failed");
-    tokio::time::sleep(Duration::from_secs(8)).await;
+    tokio::time::sleep(Duration::from_secs(4)).await;
     assert_eq!(
         query_balance(&client, &my_addr).await,
         CREATE_AMOUNT - TRANSFER_1
@@ -89,7 +89,7 @@ async fn test_transfer_asset() {
         )
         .await
         .expect("write_chain Transfer 2 failed");
-    tokio::time::sleep(Duration::from_secs(6)).await;
+    tokio::time::sleep(Duration::from_secs(4)).await;
     assert_eq!(
         query_balance(&client, &my_addr).await,
         CREATE_AMOUNT - TRANSFER_1 - TRANSFER_2

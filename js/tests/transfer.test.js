@@ -38,18 +38,18 @@ test("create account and transfer asset", async () => {
 
   // CreateAccount
   await client.writeChain("asset", "CreateAccount", { amount: CREATE_AMOUNT });
-  await sleep(10000);
+  await sleep(5000);
   expect(await queryBalance(client, myAddr)).toBe(CREATE_AMOUNT);
 
   // Transfer 1
   await client.writeChain("asset", "Transfer", { to: toAddr, amount: TRANSFER_1 });
-  await sleep(8000);
+  await sleep(4000);
   expect(await queryBalance(client, myAddr)).toBe(CREATE_AMOUNT - TRANSFER_1);
   expect(await queryBalance(client, toAddr)).toBe(TRANSFER_1);
 
   // Transfer 2
   await client.writeChain("asset", "Transfer", { to: toAddr, amount: TRANSFER_2 });
-  await sleep(6000);
+  await sleep(4000);
   expect(await queryBalance(client, myAddr)).toBe(CREATE_AMOUNT - TRANSFER_1 - TRANSFER_2);
   expect(await queryBalance(client, toAddr)).toBe(TRANSFER_1 + TRANSFER_2);
 

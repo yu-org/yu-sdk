@@ -1,0 +1,30 @@
+name: Go SDK
+
+on:
+  push:
+    paths:
+      - 'go/**'
+      - 'testchain/**'
+      - '!**/*.md'
+  pull_request:
+    paths:
+      - 'go/**'
+      - 'testchain/**'
+      - '!**/*.md'
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.24.0'
+          cache-dependency-path: go/go.sum
+
+      - name: Run Go SDK tests
+        working-directory: go
+        run: |
+          go mod tidy
+          go test ./tests/ -v -timeout 120s
