@@ -2,6 +2,12 @@
 name = "yu-sdk"
 version = "0.1.0"
 edition = "2021"
+description = "Rust SDK for interacting with a yu blockchain node (writing, reading, and event subscription)"
+license = "MIT"
+repository = "https://github.com/yu-org/yu-sdk"
+readme = "README.md"
+keywords = ["blockchain", "yu", "sdk", "web3", "client"]
+categories = ["network-programming", "cryptography::cryptocurrencies", "api-bindings"]
 
 [lib]
 name = "yu_sdk"

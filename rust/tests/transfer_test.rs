@@ -53,6 +53,7 @@ async fn test_transfer_asset() {
             &serde_json::json!({ "amount": CREATE_AMOUNT }),
             0,
             0,
+            0,
         )
         .await
         .expect("write_chain CreateAccount failed");
@@ -65,6 +66,7 @@ async fn test_transfer_asset() {
             "asset",
             "Transfer",
             &serde_json::json!({ "to": to_addr, "amount": TRANSFER_1 }),
+            0,
             0,
             0,
         )
@@ -83,6 +85,7 @@ async fn test_transfer_asset() {
             "asset",
             "Transfer",
             &serde_json::json!({ "to": to_addr, "amount": TRANSFER_2 }),
+            0,
             0,
             0,
         )

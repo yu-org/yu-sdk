@@ -41,12 +41,13 @@ func (c *YuClient) WithKeys(privkey keypair.PrivKey, pubkey keypair.PubKey) *YuC
 
 // WriteChain sends a signed writing call to the chain.
 // params is any JSON-serializable value.
-func (c *YuClient) WriteChain(tripodName, funcName string, params any, leiPrice, tips uint64) error {
+func (c *YuClient) WriteChain(tripodName, funcName string, params any, chainID, leiPrice, tips uint64) error {
 	paramsByt, err := json.Marshal(params)
 	if err != nil {
 		return err
 	}
 	wrCall := &common.WrCall{
+		ChainID:    chainID,
 		TripodName: tripodName,
 		FuncName:   funcName,
 		Params:     string(paramsByt),

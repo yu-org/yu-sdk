@@ -62,6 +62,7 @@ impl YuClient {
         tripod_name: &str,
         func_name: &str,
         params: &impl Serialize,
+        chain_id: u64,
         lei_price: u64,
         tips: u64,
     ) -> Result<(), Box<dyn std::error::Error>> {
@@ -72,7 +73,7 @@ impl YuClient {
             tripod_name: tripod_name.to_string(),
             func_name: func_name.to_string(),
             params: params_str,
-            chain_id: None,
+            chain_id: if chain_id > 0 { Some(chain_id) } else { None },
             lei_price: if lei_price > 0 { Some(lei_price) } else { None },
             tips: if tips > 0 { Some(tips) } else { None },
         };
@@ -138,7 +139,7 @@ impl YuClient {
             loop {
                 match connect_async(url.as_str()).await {
                     Ok((stream, _)) => break stream,
-                    Err(e) if retries > 0 => {
+                    Err(_) if retries > 0 => {
                         retries -= 1;
                         tokio::time::sleep(tokio::time::Duration::from_secs(1)).await;
                     }

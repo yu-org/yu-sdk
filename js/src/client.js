@@ -58,10 +58,11 @@ export class YuClient {
    * @param {string} tripodName
    * @param {string} funcName
    * @param {object} params
+   * @param {number} chainId
    * @param {number} leiPrice
    * @param {number} tips
    */
-  async writeChain(tripodName, funcName, params, leiPrice = 0, tips = 0) {
+  async writeChain(tripodName, funcName, params, chainId = 0, leiPrice = 0, tips = 0) {
     if (!this._keypair) throw new Error("KeyPair not set; call withKeypair() first");
 
     const wrCall = {
@@ -69,6 +70,7 @@ export class YuClient {
       func_name: funcName,
       params: JSON.stringify(params),
     };
+    if (chainId) wrCall.chain_id = chainId;
     if (leiPrice) wrCall.lei_price = leiPrice;
     if (tips) wrCall.tips = tips;
 

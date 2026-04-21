@@ -40,14 +40,14 @@ class YuClient:
         self._keypair = keypair
         return self
 
-    def write_chain(self, tripod_name: str, func_name: str, params: Any, lei_price: int = 0, tips: int = 0) -> None:
+    def write_chain(self, tripod_name: str, func_name: str, params: Any, chain_id: int = 0, lei_price: int = 0, tips: int = 0) -> None:
         """Send a signed writing transaction to the chain."""
         if self._keypair is None:
             raise RuntimeError("KeyPair not set; call with_keypair() first")
 
         params_str = json.dumps(params, separators=(",", ":"))
         wr_call = WrCall(tripod_name=tripod_name, func_name=func_name, params=params_str,
-                         lei_price=lei_price, tips=tips)
+                         chain_id=chain_id, lei_price=lei_price, tips=tips)
 
         # Sign: BytesToHash(json.marshal(wr_call))
         call_json = json.dumps(wr_call.to_dict(), separators=(",", ":")).encode()

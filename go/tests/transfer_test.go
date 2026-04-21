@@ -65,7 +65,7 @@ func runTransferTest(t *testing.T) {
 	)
 
 	t.Log("--- CreateAccount ---")
-	err = client.WriteChain("asset", "CreateAccount", map[string]any{"amount": createAmount}, 0, 0)
+	err = client.WriteChain("asset", "CreateAccount", map[string]any{"amount": createAmount}, 0, 0, 0)
 	assert.NoError(t, err)
 	time.Sleep(10 * time.Second)
 	assert.Equal(t, createAmount, queryBalance(t, client, pubkey.Address().String()))
@@ -74,7 +74,7 @@ func runTransferTest(t *testing.T) {
 	err = client.WriteChain("asset", "Transfer", map[string]any{
 		"to":     toPubkey.Address().String(),
 		"amount": transfer1,
-	}, 0, 0)
+	}, 0, 0, 0)
 	assert.NoError(t, err)
 	time.Sleep(8 * time.Second)
 	assert.Equal(t, createAmount-transfer1, queryBalance(t, client, pubkey.Address().String()))
@@ -84,7 +84,7 @@ func runTransferTest(t *testing.T) {
 	err = client.WriteChain("asset", "Transfer", map[string]any{
 		"to":     toPubkey.Address().String(),
 		"amount": transfer2,
-	}, 0, 0)
+	}, 0, 0, 0)
 	assert.NoError(t, err)
 	time.Sleep(6 * time.Second)
 	assert.Equal(t, createAmount-transfer1-transfer2, queryBalance(t, client, pubkey.Address().String()))
