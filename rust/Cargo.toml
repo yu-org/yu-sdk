@@ -1,6 +1,6 @@
 [package]
 name = "yu-sdk"
-version = "0.1.0"
+version = "0.1.1"
 edition = "2021"
 description = "Rust SDK for interacting with a yu blockchain node (writing, reading, and event subscription)"
 license = "MIT"
