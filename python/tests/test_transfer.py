@@ -69,3 +69,26 @@ def test_create_and_transfer(client):
 def _query_balance(client: YuClient, address: str) -> int:
     resp = client.read_chain("asset", "QueryBalance", {"account": address})
     return int(resp.get("amount", 0))
+
+
+def test_create_and_transfer_secp256k1():
+    """Same flow as test_create_and_transfer, signed with a Secp256k1 key,
+    to prove the chain accepts the secp256k1 pubkey/address/signature
+    encoding end to end."""
+    kp = KeyPair(KeyType.SECP256K1)
+    to_kp = KeyPair(KeyType.SECP256K1)
+
+    c = YuClient("http://localhost:7999", "ws://localhost:8999")
+    c.with_keypair(kp)
+
+    CREATE_AMOUNT = 300
+    TRANSFER = 120
+
+    c.write_chain("asset", "CreateAccount", {"amount": CREATE_AMOUNT})
+    time.sleep(8)
+    assert _query_balance(c, kp.address) == CREATE_AMOUNT
+
+    c.write_chain("asset", "Transfer", {"to": to_kp.address, "amount": TRANSFER})
+    time.sleep(6)
+    assert _query_balance(c, kp.address) == CREATE_AMOUNT - TRANSFER
+    assert _query_balance(c, to_kp.address) == TRANSFER

@@ -31,15 +31,15 @@ jobs:
 
       - name: Install Python dependencies
         working-directory: python
-        run: pip install -r requirements.txt
+        run: pip install -r requirements.txt eth-keys
 
       - name: Build testchain
         working-directory: testchain
         run: go mod tidy && go build -o testchain .
 
-      - name: Start testchain (auto-stop after 60s)
+      - name: Start testchain (auto-stop after 120s)
         working-directory: testchain
-        run: ./testchain -timeout 60s &
+        run: ./testchain -timeout 120s &
 
       - name: Wait for chain to be ready
         run: |
