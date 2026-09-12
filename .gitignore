@@ -23,7 +23,6 @@ python/venv/
 
 # JavaScript
 js/node_modules/
-js/package-lock.json
 js/dist/
 js/coverage/
 
