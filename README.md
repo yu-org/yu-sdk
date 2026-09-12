@@ -9,7 +9,7 @@ Multi-language SDK for interacting with a [yu](https://github.com/yu-org/yu) blo
 | Go         | `go/`      | Sr25519, Ed25519, Secp256k1 |
 | Python     | `python/`  | Ed25519 (built-in), Sr25519*, Secp256k1* |
 | JavaScript | `js/`      | Ed25519 (built-in), Sr25519* |
-| Rust       | `rust/`    | Ed25519 (built-in)          |
+| Rust       | `rust/`    | Ed25519, Secp256k1 (built-in) |
 
 \* requires optional dependency
 

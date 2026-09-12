@@ -20,7 +20,7 @@ jobs:
 
       - uses: actions/setup-go@v5
         with:
-          go-version: '1.21'
+          go-version: '1.25.0'
           cache-dependency-path: testchain/go.sum
 
       - uses: dtolnay/rust-toolchain@stable
@@ -37,9 +37,9 @@ jobs:
         working-directory: testchain
         run: go mod tidy && go build -o testchain .
 
-      - name: Start testchain (auto-stop after 60s)
+      - name: Start testchain (auto-stop after 120s)
         working-directory: testchain
-        run: ./testchain -timeout 60s &
+        run: ./testchain -timeout 120s &
 
       - name: Wait for chain to be ready
         run: |
