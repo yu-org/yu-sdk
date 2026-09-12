@@ -6,7 +6,7 @@ require (
 	github.com/HyperService-Consortium/go-hexutil v1.0.1
 	github.com/gorilla/websocket v1.5.3
 	github.com/stretchr/testify v1.10.0
-	github.com/yu-org/yu v1.3.6
+	github.com/yu-org/yu v1.3.7
 )
 
 require (

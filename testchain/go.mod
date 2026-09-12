@@ -2,7 +2,7 @@ module github.com/yu-org/yu-sdk/testchain
 
 go 1.25.0
 
-require github.com/yu-org/yu v1.3.6
+require github.com/yu-org/yu v1.3.7
 
 require (
 	filippo.io/edwards25519 v1.2.0 // indirect
